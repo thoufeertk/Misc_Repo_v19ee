@@ -1,0 +1,79 @@
+.o_property_building_overview {
+    --pm-mini-surface: #fcfcfb;
+    --pm-mini-border: rgba(11, 11, 11, 0.1);
+    --pm-mini-ink: #0b0b0b;
+    --pm-mini-ink-secondary: #52514e;
+
+    --pm-mini-blue: #2a78d6;
+    --pm-mini-orange: #eb6834;
+    --pm-mini-aqua: #1baf7a;
+    --pm-mini-good: #0ca30c;
+    --pm-mini-warning: #fab219;
+    --pm-mini-serious: #ec835a;
+    --pm-mini-critical: #d03b3b;
+
+    @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) & {
+            --pm-mini-surface: #1a1a19;
+            --pm-mini-border: rgba(255, 255, 255, 0.1);
+            --pm-mini-ink: #ffffff;
+            --pm-mini-ink-secondary: #c3c2b7;
+        }
+    }
+    :root[data-theme="dark"] & {
+        --pm-mini-surface: #1a1a19;
+        --pm-mini-border: rgba(255, 255, 255, 0.1);
+        --pm-mini-ink: #ffffff;
+        --pm-mini-ink-secondary: #c3c2b7;
+    }
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+    margin: 8px 0 16px;
+
+    .o_property_mini_tile {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: var(--pm-mini-surface);
+        border: 1px solid var(--pm-mini-border);
+        border-radius: 10px;
+        padding: 8px 10px;
+
+        .mini_icon {
+            flex: 0 0 auto;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #ffffff;
+
+            &.mini_icon_blue { background: var(--pm-mini-blue); }
+            &.mini_icon_orange { background: var(--pm-mini-orange); }
+            &.mini_icon_aqua { background: var(--pm-mini-aqua); }
+            &.mini_icon_good { background: var(--pm-mini-good); }
+            &.mini_icon_warning { background: var(--pm-mini-warning); }
+            &.mini_icon_serious { background: var(--pm-mini-serious); }
+            &.mini_icon_critical { background: var(--pm-mini-critical); }
+        }
+
+        .mini_value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--pm-mini-ink);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .mini_label {
+            color: var(--pm-mini-ink-secondary);
+            font-size: 0.72rem;
+        }
+    }
+}

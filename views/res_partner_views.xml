@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form_property_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.property.management</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_tenancies" type="object" class="oe_stat_button" icon="fa-home"
+                        invisible="tenancy_count == 0">
+                    <field name="tenancy_count" widget="statinfo" string="Tenancies"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_filter_property_inherit" model="ir.ui.view">
+        <field name="name">res.partner.search.property.management</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <filter name="type_person" position="after">
+                <filter string="Tenants" name="is_tenant" domain="[('is_tenant', '=', True)]"/>
+            </filter>
+        </field>
+    </record>
+
+</odoo>

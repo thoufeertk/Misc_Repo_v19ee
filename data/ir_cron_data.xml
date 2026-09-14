@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="cron_generate_rent_invoices" model="ir.cron">
+        <field name="name">Property Management: Generate Rent Invoices</field>
+        <field name="model_id" ref="model_property_tenancy"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_generate_rent_invoices()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_update_tenancy_state" model="ir.cron">
+        <field name="name">Property Management: Update Tenancy Status</field>
+        <field name="model_id" ref="model_property_tenancy"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_update_tenancy_state()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_check_document_expiry" model="ir.cron">
+        <field name="name">Property Management: Check Document Expiry</field>
+        <field name="model_id" ref="model_property_document"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_check_document_expiry()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_remind_tenancy_expiry" model="ir.cron">
+        <field name="name">Property Management: Remind Tenancy Expiry</field>
+        <field name="model_id" ref="model_property_tenancy"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_remind_tenancy_expiry()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

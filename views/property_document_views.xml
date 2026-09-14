@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_property_document_list" model="ir.ui.view">
+        <field name="name">property.document.list</field>
+        <field name="model">property.document</field>
+        <field name="arch" type="xml">
+            <list string="Documents" decoration-danger="state == 'expired'" decoration-warning="state == 'expiring'">
+                <field name="name"/>
+                <field name="building_id"/>
+                <field name="document_type"/>
+                <field name="issue_date"/>
+                <field name="expiry_date"/>
+                <field name="responsible_id"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'valid'"
+                       decoration-warning="state == 'expiring'"
+                       decoration-danger="state == 'expired'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_property_document_form" model="ir.ui.view">
+        <field name="name">property.document.form</field>
+        <field name="model">property.document</field>
+        <field name="arch" type="xml">
+            <form string="Building Document">
+                <sheet>
+                    <widget name="web_ribbon" title="Expired" bg_color="text-bg-danger" invisible="state != 'expired'"/>
+                    <widget name="web_ribbon" title="Expiring Soon" bg_color="text-bg-warning" invisible="state != 'expiring'"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Document name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="building_id"/>
+                            <field name="document_type"/>
+                            <field name="responsible_id"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="issue_date"/>
+                            <field name="expiry_date"/>
+                            <field name="reminder_days"/>
+                            <field name="state" widget="badge"
+                                   decoration-success="state == 'valid'"
+                                   decoration-warning="state == 'expiring'"
+                                   decoration-danger="state == 'expired'"/>
+                        </group>
+                    </group>
+                    <group string="Attachment">
+                        <field name="attachment" filename="attachment_filename"/>
+                        <field name="attachment_filename" invisible="1"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="note" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_property_document_search" model="ir.ui.view">
+        <field name="name">property.document.search</field>
+        <field name="model">property.document</field>
+        <field name="arch" type="xml">
+            <search string="Documents">
+                <field name="name"/>
+                <field name="building_id"/>
+                <field name="document_type"/>
+                <filter string="Valid" name="filter_valid" domain="[('state', '=', 'valid')]"/>
+                <filter string="Expiring Soon" name="filter_expiring" domain="[('state', '=', 'expiring')]"/>
+                <filter string="Expired" name="filter_expired" domain="[('state', '=', 'expired')]"/>
+                <group>
+                    <filter string="Building" name="groupby_building" context="{'group_by': 'building_id'}"/>
+                    <filter string="Document Type" name="groupby_type" context="{'group_by': 'document_type'}"/>
+                    <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_property_document" model="ir.actions.act_window">
+        <field name="name">Building Documents</field>
+        <field name="res_model">property.document</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_property_document_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a building document
+            </p>
+            <p>
+                Track tax receipts, insurance, licenses, etc. and get reminded before they expire.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_property_tenant_partner" model="ir.actions.act_window">
+        <field name="name">Tenants</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="domain">[('is_tenant', '=', True)]</field>
+        <field name="context">{'default_is_tenant': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first tenant
+            </p>
+            <p>
+                Tenants are managed using the standard Contacts model.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_msr_property_management_root" name="Property Management" sequence="60"
+              web_icon="msr_property_management,static/description/icon.png"/>
+
+    <menuitem id="menu_property_dashboard" name="Dashboard" parent="menu_msr_property_management_root"
+              action="action_property_dashboard" sequence="10"/>
+
+    <menuitem id="menu_property_building" name="Buildings" parent="menu_msr_property_management_root"
+              action="action_property_building" sequence="20"/>
+
+    <menuitem id="menu_property_room" name="Rooms" parent="menu_msr_property_management_root"
+              action="action_property_room" sequence="30"/>
+
+    <menuitem id="menu_property_tenancy" name="Tenancies" parent="menu_msr_property_management_root"
+              action="action_property_tenancy" sequence="40"/>
+
+    <menuitem id="menu_property_tenant_partner" name="Tenants" parent="menu_msr_property_management_root"
+              action="action_property_tenant_partner" sequence="50"/>
+
+    <menuitem id="menu_property_document" name="Documents" parent="menu_msr_property_management_root"
+              action="action_property_document" sequence="60"/>
+
+</odoo>

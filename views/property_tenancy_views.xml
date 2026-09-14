@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_property_tenancy_list" model="ir.ui.view">
+        <field name="name">property.tenancy.list</field>
+        <field name="model">property.tenancy</field>
+        <field name="arch" type="xml">
+            <list string="Tenancies" decoration-muted="state in ('terminated', 'expired')">
+                <field name="name"/>
+                <field name="tenant_id"/>
+                <field name="building_id"/>
+                <field name="room_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="invoice_frequency"/>
+                <field name="rent_amount" sum="Total"/>
+                <field name="next_invoice_date"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'expired'"
+                       decoration-danger="state == 'terminated'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_property_tenancy_form" model="ir.ui.view">
+        <field name="name">property.tenancy.form</field>
+        <field name="model">property.tenancy</field>
+        <field name="arch" type="xml">
+            <form string="Tenancy">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_terminate" type="object" string="Terminate"
+                            invisible="state != 'active'" confirm="Are you sure you want to terminate this tenancy?"/>
+                    <button name="action_set_to_draft" type="object" string="Reset to Draft"
+                            invisible="state not in ('expired', 'terminated')"/>
+                    <button name="action_generate_invoice_now" type="object" string="Generate Invoice Now"
+                            invisible="state != 'active'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoices" type="object" class="oe_stat_button" icon="fa-pencil-square-o">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="tenant_id"/>
+                            <field name="building_id"/>
+                            <field name="room_id" domain="[('building_id', '=', building_id)]"
+                                   context="{'default_building_id': building_id}"
+                                   placeholder="Select a building first"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="rent_amount"/>
+                            <field name="rent_amount_monthly" readonly="1"/>
+                            <field name="security_deposit"/>
+                        </group>
+                    </group>
+                    <group string="Invoicing">
+                        <group>
+                            <field name="invoice_frequency"/>
+                            <field name="custom_period_months" invisible="invoice_frequency != 'custom'"/>
+                            <field name="product_id"/>
+                            <field name="journal_id"/>
+                        </group>
+                        <group>
+                            <field name="next_invoice_date" readonly="state != 'active'"/>
+                            <field name="last_invoice_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="note" nolabel="1" placeholder="Terms, special conditions, ..."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_property_tenancy_search" model="ir.ui.view">
+        <field name="name">property.tenancy.search</field>
+        <field name="model">property.tenancy</field>
+        <field name="arch" type="xml">
+            <search string="Tenancies">
+                <field name="name"/>
+                <field name="tenant_id"/>
+                <field name="building_id"/>
+                <field name="room_id"/>
+                <filter string="Draft" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Active" name="filter_active" domain="[('state', '=', 'active')]"/>
+                <filter string="Expired" name="filter_expired" domain="[('state', '=', 'expired')]"/>
+                <filter string="Terminated" name="filter_terminated" domain="[('state', '=', 'terminated')]"/>
+                <separator/>
+                <filter string="Due for Invoicing" name="filter_due" domain="[('next_invoice_date', '&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <group>
+                    <filter string="Building" name="groupby_building" context="{'group_by': 'building_id'}"/>
+                    <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
+                    <filter string="Invoice Frequency" name="groupby_frequency" context="{'group_by': 'invoice_frequency'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_property_tenancy" model="ir.actions.act_window">
+        <field name="name">Tenancies</field>
+        <field name="res_model">property.tenancy</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_property_tenancy_search"/>
+        <field name="context">{'search_default_filter_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first tenancy agreement
+            </p>
+            <p>
+                Draft customer invoices will be generated automatically according to
+                the chosen invoicing frequency, until the tenancy validity date.
+            </p>
+        </field>
+    </record>
+
+</odoo>

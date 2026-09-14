@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_property_building_list" model="ir.ui.view">
+        <field name="name">property.building.list</field>
+        <field name="model">property.building</field>
+        <field name="arch" type="xml">
+            <list string="Buildings">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="building_type"/>
+                <field name="city"/>
+                <field name="room_count"/>
+                <field name="occupied_room_count"/>
+                <field name="vacant_room_count"/>
+                <field name="occupancy_rate" widget="percentage" string="Occupancy"/>
+                <field name="monthly_expected_revenue" sum="Total"/>
+                <field name="manager_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_property_building_form" model="ir.ui.view">
+        <field name="name">property.building.form</field>
+        <field name="model">property.building</field>
+        <field name="arch" type="xml">
+            <form string="Building">
+                <header>
+                    <button name="action_locate_on_map" type="object" string="Locate on Map"/>
+                    <button name="action_view_on_map" type="object" string="View on Map"
+                            invisible="not latitude and not longitude"/>
+                </header>
+                <sheet>
+                    <field name="image_1920" widget="image" class="oe_avatar"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_rooms" type="object" class="oe_stat_button" icon="fa-building">
+                            <field name="room_count" widget="statinfo" string="Rooms"/>
+                        </button>
+                        <button name="action_view_documents" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="document_ids" widget="statinfo" string="Documents"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Building name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="General">
+                            <field name="code"/>
+                            <field name="building_type"/>
+                            <field name="total_floors"/>
+                            <field name="manager_id"/>
+                            <field name="owner_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="analytic_account_id"/>
+                        </group>
+                        <group string="Address">
+                            <field name="street"/>
+                            <field name="street2"/>
+                            <field name="city"/>
+                            <field name="state_id"/>
+                            <field name="zip"/>
+                            <field name="country_id"/>
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="amenity_ids" widget="many2many_tags" options="{'color_field': 'color'}"
+                               colspan="2"/>
+                    </group>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="occupied_room_count" invisible="1"/>
+                    <field name="vacant_room_count" invisible="1"/>
+                    <field name="maintenance_room_count" invisible="1"/>
+                    <field name="occupancy_rate" invisible="1"/>
+                    <field name="monthly_expected_revenue" invisible="1"/>
+                    <field name="total_invoiced_amount" invisible="1"/>
+                    <field name="document_expiring_count" invisible="1"/>
+                    <div class="o_horizontal_separator mt-3">Overview</div>
+                    <widget name="property_building_overview"/>
+                    <notebook>
+                        <page string="Gallery" name="gallery">
+                            <field name="building_image_ids">
+                                <kanban>
+                                    <templates>
+                                        <t t-name="card">
+                                            <div class="o_kanban_image_wrapper">
+                                                <field name="image_256" widget="image" class="o_kanban_image"
+                                                       options="{'size': [256, 256]}" alt="Building photo"/>
+                                                <field name="name" placeholder="Caption"/>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </page>
+                        <page string="Rooms" name="rooms">
+                            <field name="room_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="floor"/>
+                                    <field name="room_type"/>
+                                    <field name="area"/>
+                                    <field name="rent_amount"/>
+                                    <field name="status" widget="badge"
+                                           decoration-success="status == 'vacant'"
+                                           decoration-danger="status == 'occupied'"
+                                           decoration-warning="status == 'maintenance'"/>
+                                    <field name="tenant_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Documents" name="documents">
+                            <field name="document_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="document_type"/>
+                                    <field name="issue_date"/>
+                                    <field name="expiry_date"/>
+                                    <field name="responsible_id"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'valid'"
+                                           decoration-warning="state == 'expiring'"
+                                           decoration-danger="state == 'expired'"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_property_building_search" model="ir.ui.view">
+        <field name="name">property.building.search</field>
+        <field name="model">property.building</field>
+        <field name="arch" type="xml">
+            <search string="Buildings">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="city"/>
+                <field name="manager_id"/>
+                <filter string="Residential" name="filter_residential" domain="[('building_type', '=', 'residential')]"/>
+                <filter string="Commercial" name="filter_commercial" domain="[('building_type', '=', 'commercial')]"/>
+                <separator/>
+                <filter string="Has Expiring Documents" name="filter_expiring_docs" domain="[('document_expiring_count', '&gt;', 0)]"/>
+                <group>
+                    <filter string="Building Type" name="groupby_type" context="{'group_by': 'building_type'}"/>
+                    <filter string="Manager" name="groupby_manager" context="{'group_by': 'manager_id'}"/>
+                    <filter string="City" name="groupby_city" context="{'group_by': 'city'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_property_building" model="ir.actions.act_window">
+        <field name="name">Buildings</field>
+        <field name="res_model">property.building</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_property_building_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first building
+            </p>
+            <p>
+                Buildings group together the rooms/units you manage.
+            </p>
+        </field>
+    </record>
+
+</odoo>

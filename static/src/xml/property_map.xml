@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="msr_property_management.PropertyMap">
+        <div class="o_property_map">
+            <div class="o_property_map_header">
+                <h2>Buildings Map</h2>
+                <span class="o_property_map_subtitle" t-if="!state.loading">
+                    <t t-esc="state.buildings.length"/> building(s) located
+                </span>
+            </div>
+            <div t-if="state.loading" class="text-center p-5">
+                <i class="fa fa-spinner fa-spin fa-2x"/>
+            </div>
+            <div t-if="!state.loading and !state.buildings.length" class="o_property_map_empty text-center p-5">
+                <i class="fa fa-map-marker fa-2x mb-2"/>
+                <p>No buildings have coordinates yet. Open a building and click "Locate on Map".</p>
+            </div>
+            <div class="o_property_map_canvas" t-ref="map" t-att-class="{ 'd-none': state.loading }"/>
+        </div>
+    </t>
+
+</templates>

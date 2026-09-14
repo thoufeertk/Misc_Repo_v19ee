@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="analytic_plan_buildings" model="account.analytic.plan">
+        <field name="name">Buildings</field>
+    </record>
+    <record id="analytic_plan_rooms" model="account.analytic.plan">
+        <field name="name">Rooms</field>
+    </record>
+</odoo>

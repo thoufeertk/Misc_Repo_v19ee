@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="msr_property_management.BuildingOverviewWidget">
+        <div class="o_property_building_overview">
+            <div class="o_property_mini_tile">
+                <div class="mini_icon mini_icon_good"><i class="fa fa-check-circle"/></div>
+                <div>
+                    <div class="mini_value" t-esc="data.occupied_room_count"/>
+                    <div class="mini_label">Occupied</div>
+                </div>
+            </div>
+            <div class="o_property_mini_tile">
+                <div class="mini_icon mini_icon_warning"><i class="fa fa-circle-o"/></div>
+                <div>
+                    <div class="mini_value" t-esc="data.vacant_room_count"/>
+                    <div class="mini_label">Vacant</div>
+                </div>
+            </div>
+            <div class="o_property_mini_tile">
+                <div class="mini_icon mini_icon_serious"><i class="fa fa-wrench"/></div>
+                <div>
+                    <div class="mini_value" t-esc="data.maintenance_room_count"/>
+                    <div class="mini_label">Maintenance</div>
+                </div>
+            </div>
+            <div class="o_property_mini_tile">
+                <div class="mini_icon mini_icon_aqua"><i class="fa fa-percent"/></div>
+                <div>
+                    <div class="mini_value" t-esc="formatPercent(data.occupancy_rate)"/>
+                    <div class="mini_label">Occupancy</div>
+                </div>
+            </div>
+            <div class="o_property_mini_tile">
+                <div class="mini_icon mini_icon_blue"><i class="fa fa-line-chart"/></div>
+                <div>
+                    <div class="mini_value" t-esc="formatMoney(data.monthly_expected_revenue)"/>
+                    <div class="mini_label">Expected/mo</div>
+                </div>
+            </div>
+            <div class="o_property_mini_tile">
+                <div class="mini_icon mini_icon_orange"><i class="fa fa-money"/></div>
+                <div>
+                    <div class="mini_value" t-esc="formatMoney(data.total_invoiced_amount)"/>
+                    <div class="mini_label">Invoiced</div>
+                </div>
+            </div>
+            <div class="o_property_mini_tile">
+                <div class="mini_icon mini_icon_critical"><i class="fa fa-file-text-o"/></div>
+                <div>
+                    <div class="mini_value" t-esc="data.document_expiring_count"/>
+                    <div class="mini_label">Expiring Docs</div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

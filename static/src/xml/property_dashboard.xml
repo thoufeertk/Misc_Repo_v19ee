@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="msr_property_management.Dashboard">
+        <div class="o_property_dashboard">
+            <div class="o_property_dashboard_header">
+                <div>
+                    <h2>Property Management</h2>
+                    <span class="o_property_dashboard_subtitle">Portfolio overview and revenue performance</span>
+                </div>
+                <button class="btn o_property_refresh_btn" t-on-click="loadData">
+                    <i class="fa fa-refresh me-1"/> Refresh
+                </button>
+            </div>
+
+            <div t-if="state.loading" class="text-center p-5">
+                <i class="fa fa-spinner fa-spin fa-2x"/>
+            </div>
+
+            <t t-if="!state.loading and state.data">
+                <div class="o_property_kpi_grid">
+                    <div class="o_property_kpi_card" t-on-click="openBuildings">
+                        <div class="kpi_icon kpi_icon_blue"><i class="fa fa-building"/></div>
+                        <div>
+                            <div class="o_property_kpi_value" t-esc="state.data.total_buildings"/>
+                            <div class="o_property_kpi_label">Buildings</div>
+                        </div>
+                    </div>
+                    <div class="o_property_kpi_card" t-on-click="() => this.openRooms()">
+                        <div class="kpi_icon kpi_icon_violet"><i class="fa fa-th-large"/></div>
+                        <div>
+                            <div class="o_property_kpi_value" t-esc="state.data.total_rooms"/>
+                            <div class="o_property_kpi_label">Total Rooms</div>
+                        </div>
+                    </div>
+                    <div class="o_property_kpi_card" t-on-click="() => this.openRooms([['status', '=', 'occupied']])">
+                        <div class="kpi_icon kpi_icon_good"><i class="fa fa-check-circle"/></div>
+                        <div>
+                            <div class="o_property_kpi_value" t-esc="state.data.occupied_rooms"/>
+                            <div class="o_property_kpi_label">Occupied</div>
+                        </div>
+                    </div>
+                    <div class="o_property_kpi_card" t-on-click="() => this.openRooms([['status', '=', 'vacant']])">
+                        <div class="kpi_icon kpi_icon_warning"><i class="fa fa-circle-o"/></div>
+                        <div>
+                            <div class="o_property_kpi_value" t-esc="state.data.vacant_rooms"/>
+                            <div class="o_property_kpi_label">Vacant</div>
+                        </div>
+                    </div>
+                    <div class="o_property_kpi_card" t-on-click="() => this.openRooms([['status', '=', 'maintenance']])">
+                        <div class="kpi_icon kpi_icon_serious"><i class="fa fa-wrench"/></div>
+                        <div>
+                            <div class="o_property_kpi_value" t-esc="state.data.maintenance_rooms"/>
+                            <div class="o_property_kpi_label">Maintenance</div>
+                        </div>
+                    </div>
+                    <div class="o_property_kpi_card">
+                        <div class="kpi_icon kpi_icon_aqua"><i class="fa fa-percent"/></div>
+                        <div>
+                            <div class="o_property_kpi_value" t-esc="formatPercent(state.data.occupancy_rate)"/>
+                            <div class="o_property_kpi_label">Occupancy Rate</div>
+                        </div>
+                    </div>
+                    <div class="o_property_kpi_card" t-on-click="openTenancies">
+                        <div class="kpi_icon kpi_icon_blue"><i class="fa fa-line-chart"/></div>
+                        <div>
+                            <div class="o_property_kpi_value" t-esc="formatMoney(state.data.total_monthly_expected_revenue)"/>
+                            <div class="o_property_kpi_label">Expected Monthly Revenue</div>
+                        </div>
+                    </div>
+                    <div class="o_property_kpi_card">
+                        <div class="kpi_icon kpi_icon_orange"><i class="fa fa-money"/></div>
+                        <div>
+                            <div class="o_property_kpi_value" t-esc="formatMoney(state.data.total_invoiced_amount)"/>
+                            <div class="o_property_kpi_label">Total Revenue (Posted)</div>
+                        </div>
+                    </div>
+                    <div class="o_property_kpi_card" t-on-click="openDocuments">
+                        <div class="kpi_icon kpi_icon_critical"><i class="fa fa-file-text-o"/></div>
+                        <div>
+                            <div class="o_property_kpi_value" t-esc="state.data.expiring_documents_count"/>
+                            <div class="o_property_kpi_label">Documents Expiring/Expired</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="o_property_chart_row">
+                    <div class="o_property_card o_property_chart_card">
+                        <div class="o_property_card_header">Room Occupancy</div>
+                        <div class="o_property_chart_wrapper">
+                            <canvas t-ref="occupancyChart"/>
+                        </div>
+                    </div>
+                    <div class="o_property_card o_property_chart_card o_property_chart_card_wide">
+                        <div class="o_property_card_header">Revenue by Building</div>
+                        <div class="o_property_chart_wrapper">
+                            <canvas t-ref="revenueChart"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="o_property_card">
+                    <div class="o_property_card_header">Revenue &amp; Occupancy by Building</div>
+                    <div class="o_property_table_wrapper">
+                        <div t-if="!state.data.buildings.length" class="text-muted p-3">
+                            No buildings yet.
+                        </div>
+                        <table t-if="state.data.buildings.length" class="o_property_building_table">
+                            <thead>
+                                <tr>
+                                    <th>Building</th>
+                                    <th>Rooms</th>
+                                    <th>Occupied</th>
+                                    <th>Vacant</th>
+                                    <th>Occupancy</th>
+                                    <th>Expected Monthly Revenue</th>
+                                    <th>Total Revenue (Posted)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="state.data.buildings" t-as="building" t-key="building.id"
+                                    t-on-click="() => this.openBuilding(building.id)" class="o_property_building_row">
+                                    <td t-esc="building.name"/>
+                                    <td t-esc="building.room_count"/>
+                                    <td t-esc="building.occupied_room_count"/>
+                                    <td t-esc="building.vacant_room_count"/>
+                                    <td t-esc="formatPercent(building.occupancy_rate)"/>
+                                    <td t-esc="formatMoney(building.monthly_expected_revenue)"/>
+                                    <td>
+                                        <div class="o_property_revenue_bar_wrapper">
+                                            <div class="o_property_revenue_bar"
+                                                 t-attf-style="width: {{revenueBarWidth(building)}}%"/>
+                                            <span t-esc="formatMoney(building.total_invoiced_amount)"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>

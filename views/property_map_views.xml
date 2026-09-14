@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_property_map" model="ir.actions.client">
+        <field name="name">Map</field>
+        <field name="tag">msr_property_management_map</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_property_amenity_list" model="ir.ui.view">
+        <field name="name">property.amenity.list</field>
+        <field name="model">property.amenity</field>
+        <field name="arch" type="xml">
+            <list string="Amenities" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="category"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_property_amenity" model="ir.actions.act_window">
+        <field name="name">Amenities</field>
+        <field name="res_model">property.amenity</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create an amenity
+            </p>
+            <p>
+                Amenities can be selected on both buildings and rooms.
+            </p>
+        </field>
+    </record>
+
+</odoo>

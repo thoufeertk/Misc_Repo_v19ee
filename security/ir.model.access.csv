@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_property_building_user,property.building.user,model_property_building,base.group_user,1,1,1,1
+access_property_room_user,property.room.user,model_property_room,base.group_user,1,1,1,1
+access_property_tenancy_user,property.tenancy.user,model_property_tenancy,base.group_user,1,1,1,1
+access_property_document_user,property.document.user,model_property_document,base.group_user,1,1,1,1
+access_property_amenity_user,property.amenity.user,model_property_amenity,base.group_user,1,0,0,0
+access_property_amenity_system,property.amenity.system,model_property_amenity,base.group_system,1,1,1,1
+access_property_room_image_user,property.room.image.user,model_property_room_image,base.group_user,1,1,1,1
+access_property_building_image_user,property.building.image.user,model_property_building_image,base.group_user,1,1,1,1

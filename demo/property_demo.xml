@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Buildings -->
+    <record id="demo_building_sunrise" model="property.building">
+        <field name="name">Sunrise Heights</field>
+        <field name="code">SUN-01</field>
+        <field name="building_type">residential</field>
+        <field name="manager_id" ref="base.user_admin"/>
+        <field name="street">221 Palm Grove Road</field>
+        <field name="city">Mumbai</field>
+        <field name="zip">400001</field>
+        <field name="total_floors">8</field>
+        <field name="latitude">19.07600</field>
+        <field name="longitude">72.87770</field>
+        <field name="amenity_ids" eval="[(6, 0, [
+            ref('msr_property_management.amenity_lift'),
+            ref('msr_property_management.amenity_power_backup'),
+            ref('msr_property_management.amenity_security_guard'),
+            ref('msr_property_management.amenity_parking'),
+        ])]"/>
+    </record>
+
+    <record id="demo_building_silverpark" model="property.building">
+        <field name="name">Silver Business Park</field>
+        <field name="code">SBP-02</field>
+        <field name="building_type">commercial</field>
+        <field name="manager_id" ref="base.user_admin"/>
+        <field name="street">14 Industrial Avenue</field>
+        <field name="city">Pune</field>
+        <field name="zip">411001</field>
+        <field name="total_floors">5</field>
+        <field name="latitude">18.52040</field>
+        <field name="longitude">73.85670</field>
+        <field name="amenity_ids" eval="[(6, 0, [
+            ref('msr_property_management.amenity_cctv'),
+            ref('msr_property_management.amenity_fire_safety'),
+            ref('msr_property_management.amenity_parking'),
+            ref('msr_property_management.amenity_lift'),
+        ])]"/>
+    </record>
+
+    <record id="demo_building_palm" model="property.building">
+        <field name="name">Palm Residency</field>
+        <field name="code">PLR-03</field>
+        <field name="building_type">mixed</field>
+        <field name="manager_id" ref="base.user_admin"/>
+        <field name="street">7 Lakeview Street</field>
+        <field name="city">Bengaluru</field>
+        <field name="zip">560001</field>
+        <field name="total_floors">6</field>
+        <field name="latitude">12.97160</field>
+        <field name="longitude">77.59460</field>
+        <field name="amenity_ids" eval="[(6, 0, [
+            ref('msr_property_management.amenity_clubhouse'),
+            ref('msr_property_management.amenity_gym'),
+            ref('msr_property_management.amenity_swimming_pool'),
+            ref('msr_property_management.amenity_security_guard'),
+        ])]"/>
+    </record>
+
+    <!-- Rooms / Units : Sunrise Heights -->
+    <record id="demo_room_sun_101" model="property.room">
+        <field name="building_id" ref="demo_building_sunrise"/>
+        <field name="name">101</field>
+        <field name="floor">1</field>
+        <field name="room_type">1bhk</field>
+        <field name="area">650</field>
+        <field name="rent_amount">25000</field>
+        <field name="security_deposit">50000</field>
+        <field name="furnishing_status">semi_furnished</field>
+        <field name="bathroom_count">1</field>
+        <field name="balcony_count">1</field>
+        <field name="amenity_ids" eval="[(6, 0, [
+            ref('msr_property_management.amenity_wifi'), ref('msr_property_management.amenity_wardrobe'),
+        ])]"/>
+    </record>
+    <record id="demo_room_sun_102" model="property.room">
+        <field name="building_id" ref="demo_building_sunrise"/>
+        <field name="name">102</field>
+        <field name="floor">1</field>
+        <field name="room_type">2bhk</field>
+        <field name="area">900</field>
+        <field name="rent_amount">32000</field>
+        <field name="security_deposit">64000</field>
+        <field name="furnishing_status">fully_furnished</field>
+        <field name="bathroom_count">2</field>
+        <field name="balcony_count">2</field>
+        <field name="amenity_ids" eval="[(6, 0, [
+            ref('msr_property_management.amenity_wifi'), ref('msr_property_management.amenity_ac'),
+            ref('msr_property_management.amenity_tv'), ref('msr_property_management.amenity_wardrobe'),
+        ])]"/>
+    </record>
+    <record id="demo_room_sun_103" model="property.room">
+        <field name="building_id" ref="demo_building_sunrise"/>
+        <field name="name">103</field>
+        <field name="floor">1</field>
+        <field name="room_type">studio</field>
+        <field name="area">420</field>
+        <field name="rent_amount">15000</field>
+        <field name="security_deposit">30000</field>
+        <field name="furnishing_status">unfurnished</field>
+        <field name="bathroom_count">1</field>
+        <field name="balcony_count">0</field>
+    </record>
+    <record id="demo_room_sun_201" model="property.room">
+        <field name="building_id" ref="demo_building_sunrise"/>
+        <field name="name">201</field>
+        <field name="floor">2</field>
+        <field name="room_type">2bhk</field>
+        <field name="area">920</field>
+        <field name="rent_amount">33000</field>
+        <field name="security_deposit">66000</field>
+        <field name="furnishing_status">semi_furnished</field>
+        <field name="bathroom_count">2</field>
+        <field name="balcony_count">1</field>
+    </record>
+    <record id="demo_room_sun_202" model="property.room">
+        <field name="building_id" ref="demo_building_sunrise"/>
+        <field name="name">202</field>
+        <field name="floor">2</field>
+        <field name="room_type">3bhk</field>
+        <field name="area">1250</field>
+        <field name="rent_amount">45000</field>
+        <field name="security_deposit">90000</field>
+        <field name="furnishing_status">fully_furnished</field>
+        <field name="bathroom_count">3</field>
+        <field name="balcony_count">2</field>
+        <field name="under_maintenance">True</field>
+    </record>
+
+    <!-- Rooms / Units : Silver Business Park -->
+    <record id="demo_room_sbp_g1" model="property.room">
+        <field name="building_id" ref="demo_building_silverpark"/>
+        <field name="name">G1</field>
+        <field name="floor">Ground</field>
+        <field name="room_type">office</field>
+        <field name="area">1100</field>
+        <field name="rent_amount">60000</field>
+        <field name="security_deposit">180000</field>
+        <field name="furnishing_status">semi_furnished</field>
+        <field name="bathroom_count">2</field>
+        <field name="amenity_ids" eval="[(6, 0, [
+            ref('msr_property_management.amenity_wifi'), ref('msr_property_management.amenity_ac'),
+        ])]"/>
+    </record>
+    <record id="demo_room_sbp_g2" model="property.room">
+        <field name="building_id" ref="demo_building_silverpark"/>
+        <field name="name">G2</field>
+        <field name="floor">Ground</field>
+        <field name="room_type">shop</field>
+        <field name="area">700</field>
+        <field name="rent_amount">40000</field>
+        <field name="security_deposit">80000</field>
+        <field name="furnishing_status">unfurnished</field>
+        <field name="bathroom_count">1</field>
+    </record>
+    <record id="demo_room_sbp_f1" model="property.room">
+        <field name="building_id" ref="demo_building_silverpark"/>
+        <field name="name">F1</field>
+        <field name="floor">1</field>
+        <field name="room_type">office</field>
+        <field name="area">1050</field>
+        <field name="rent_amount">55000</field>
+        <field name="security_deposit">110000</field>
+        <field name="furnishing_status">semi_furnished</field>
+        <field name="bathroom_count">2</field>
+    </record>
+    <record id="demo_room_sbp_f2" model="property.room">
+        <field name="building_id" ref="demo_building_silverpark"/>
+        <field name="name">F2</field>
+        <field name="floor">1</field>
+        <field name="room_type">office</field>
+        <field name="area">980</field>
+        <field name="rent_amount">50000</field>
+        <field name="security_deposit">100000</field>
+        <field name="furnishing_status">unfurnished</field>
+        <field name="bathroom_count">1</field>
+    </record>
+
+    <!-- Rooms / Units : Palm Residency -->
+    <record id="demo_room_plr_a1" model="property.room">
+        <field name="building_id" ref="demo_building_palm"/>
+        <field name="name">A1</field>
+        <field name="floor">1</field>
+        <field name="room_type">2bhk</field>
+        <field name="area">880</field>
+        <field name="rent_amount">28000</field>
+        <field name="security_deposit">56000</field>
+        <field name="furnishing_status">fully_furnished</field>
+        <field name="bathroom_count">2</field>
+        <field name="balcony_count">1</field>
+        <field name="amenity_ids" eval="[(6, 0, [
+            ref('msr_property_management.amenity_wifi'), ref('msr_property_management.amenity_ac'),
+            ref('msr_property_management.amenity_balcony'),
+        ])]"/>
+    </record>
+    <record id="demo_room_plr_a2" model="property.room">
+        <field name="building_id" ref="demo_building_palm"/>
+        <field name="name">A2</field>
+        <field name="floor">1</field>
+        <field name="room_type">1bhk</field>
+        <field name="area">610</field>
+        <field name="rent_amount">20000</field>
+        <field name="security_deposit">40000</field>
+        <field name="furnishing_status">unfurnished</field>
+        <field name="bathroom_count">1</field>
+    </record>
+    <record id="demo_room_plr_b1" model="property.room">
+        <field name="building_id" ref="demo_building_palm"/>
+        <field name="name">B1</field>
+        <field name="floor">2</field>
+        <field name="room_type">office</field>
+        <field name="area">750</field>
+        <field name="rent_amount">35000</field>
+        <field name="security_deposit">70000</field>
+        <field name="furnishing_status">semi_furnished</field>
+        <field name="bathroom_count">1</field>
+    </record>
+    <record id="demo_room_plr_b2" model="property.room">
+        <field name="building_id" ref="demo_building_palm"/>
+        <field name="name">B2</field>
+        <field name="floor">2</field>
+        <field name="room_type">shop</field>
+        <field name="area">640</field>
+        <field name="rent_amount">30000</field>
+        <field name="security_deposit">60000</field>
+        <field name="furnishing_status">unfurnished</field>
+        <field name="bathroom_count">1</field>
+        <field name="under_maintenance">True</field>
+    </record>
+
+    <!-- Tenants -->
+    <record id="demo_tenant_ravi" model="res.partner">
+        <field name="name">Ravi Kumar</field>
+        <field name="company_type">person</field>
+        <field name="email">ravi.kumar@example.com</field>
+        <field name="phone">+91 98200 11111</field>
+        <field name="is_tenant">True</field>
+    </record>
+    <record id="demo_tenant_priya" model="res.partner">
+        <field name="name">Priya Sharma</field>
+        <field name="company_type">person</field>
+        <field name="email">priya.sharma@example.com</field>
+        <field name="phone">+91 98200 22222</field>
+        <field name="is_tenant">True</field>
+    </record>
+    <record id="demo_tenant_acme" model="res.partner">
+        <field name="name">Acme Retail Pvt Ltd</field>
+        <field name="company_type">company</field>
+        <field name="email">contact@acmeretail.example.com</field>
+        <field name="phone">+91 98200 33333</field>
+        <field name="is_tenant">True</field>
+    </record>
+    <record id="demo_tenant_john" model="res.partner">
+        <field name="name">John Mathews</field>
+        <field name="company_type">person</field>
+        <field name="email">john.mathews@example.com</field>
+        <field name="phone">+91 98200 44444</field>
+        <field name="is_tenant">True</field>
+    </record>
+    <record id="demo_tenant_meera" model="res.partner">
+        <field name="name">Meera Nair</field>
+        <field name="company_type">person</field>
+        <field name="email">meera.nair@example.com</field>
+        <field name="phone">+91 98200 55555</field>
+        <field name="is_tenant">True</field>
+    </record>
+    <record id="demo_tenant_techsol" model="res.partner">
+        <field name="name">TechSol Solutions LLP</field>
+        <field name="company_type">company</field>
+        <field name="email">info@techsol.example.com</field>
+        <field name="phone">+91 98200 66666</field>
+        <field name="is_tenant">True</field>
+    </record>
+
+    <!-- Active tenancies on occupied rooms -->
+    <record id="demo_tenancy_sun_101" model="property.tenancy">
+        <field name="tenant_id" ref="demo_tenant_ravi"/>
+        <field name="room_id" ref="demo_room_sun_101"/>
+        <field name="date_start" eval="(DateTime.today() - relativedelta(months=8)).strftime('%Y-%m-%d')"/>
+        <field name="date_end" eval="(DateTime.today() + relativedelta(months=4)).strftime('%Y-%m-%d')"/>
+        <field name="rent_amount">25000</field>
+        <field name="invoice_frequency">monthly</field>
+        <field name="state">active</field>
+        <field name="next_invoice_date" eval="(DateTime.today() - relativedelta(months=1)).strftime('%Y-%m-%d')"/>
+        <field name="last_invoice_date" eval="(DateTime.today() - relativedelta(months=2)).strftime('%Y-%m-%d')"/>
+    </record>
+
+    <record id="demo_tenancy_sun_102" model="property.tenancy">
+        <field name="tenant_id" ref="demo_tenant_priya"/>
+        <field name="room_id" ref="demo_room_sun_102"/>
+        <field name="date_start" eval="(DateTime.today() - relativedelta(months=3)).strftime('%Y-%m-%d')"/>
+        <field name="date_end" eval="(DateTime.today() + relativedelta(days=10)).strftime('%Y-%m-%d')"/>
+        <field name="rent_amount">32000</field>
+        <field name="invoice_frequency">monthly</field>
+        <field name="state">active</field>
+        <field name="next_invoice_date" eval="(DateTime.today() - relativedelta(months=1)).strftime('%Y-%m-%d')"/>
+        <field name="last_invoice_date" eval="(DateTime.today() - relativedelta(months=2)).strftime('%Y-%m-%d')"/>
+    </record>
+
+    <record id="demo_tenancy_sbp_g1" model="property.tenancy">
+        <field name="tenant_id" ref="demo_tenant_acme"/>
+        <field name="room_id" ref="demo_room_sbp_g1"/>
+        <field name="date_start" eval="(DateTime.today() - relativedelta(months=10)).strftime('%Y-%m-%d')"/>
+        <field name="date_end" eval="(DateTime.today() + relativedelta(months=2)).strftime('%Y-%m-%d')"/>
+        <field name="rent_amount">180000</field>
+        <field name="invoice_frequency">quarterly</field>
+        <field name="state">active</field>
+        <field name="next_invoice_date" eval="(DateTime.today() - relativedelta(months=1)).strftime('%Y-%m-%d')"/>
+        <field name="last_invoice_date" eval="(DateTime.today() - relativedelta(months=4)).strftime('%Y-%m-%d')"/>
+    </record>
+
+    <record id="demo_tenancy_sbp_g2" model="property.tenancy">
+        <field name="tenant_id" ref="demo_tenant_techsol"/>
+        <field name="room_id" ref="demo_room_sbp_g2"/>
+        <field name="date_start" eval="(DateTime.today() - relativedelta(months=6)).strftime('%Y-%m-%d')"/>
+        <field name="date_end" eval="(DateTime.today() + relativedelta(months=6)).strftime('%Y-%m-%d')"/>
+        <field name="rent_amount">40000</field>
+        <field name="invoice_frequency">monthly</field>
+        <field name="state">active</field>
+        <field name="next_invoice_date" eval="(DateTime.today() - relativedelta(months=1)).strftime('%Y-%m-%d')"/>
+        <field name="last_invoice_date" eval="(DateTime.today() - relativedelta(months=2)).strftime('%Y-%m-%d')"/>
+    </record>
+
+    <record id="demo_tenancy_plr_a1" model="property.tenancy">
+        <field name="tenant_id" ref="demo_tenant_john"/>
+        <field name="room_id" ref="demo_room_plr_a1"/>
+        <field name="date_start" eval="(DateTime.today() - relativedelta(years=1)).strftime('%Y-%m-%d')"/>
+        <field name="date_end" eval="(DateTime.today() + relativedelta(months=1)).strftime('%Y-%m-%d')"/>
+        <field name="rent_amount">336000</field>
+        <field name="invoice_frequency">yearly</field>
+        <field name="state">active</field>
+        <field name="next_invoice_date" eval="(DateTime.today() + relativedelta(months=11)).strftime('%Y-%m-%d')"/>
+        <field name="last_invoice_date" eval="(DateTime.today() - relativedelta(years=1)).strftime('%Y-%m-%d')"/>
+    </record>
+
+    <record id="demo_tenancy_plr_b1" model="property.tenancy">
+        <field name="tenant_id" ref="demo_tenant_meera"/>
+        <field name="room_id" ref="demo_room_plr_b1"/>
+        <field name="date_start" eval="(DateTime.today() - relativedelta(months=5)).strftime('%Y-%m-%d')"/>
+        <field name="date_end" eval="(DateTime.today() + relativedelta(months=7)).strftime('%Y-%m-%d')"/>
+        <field name="rent_amount">35000</field>
+        <field name="invoice_frequency">monthly</field>
+        <field name="state">active</field>
+        <field name="next_invoice_date" eval="(DateTime.today() - relativedelta(months=1)).strftime('%Y-%m-%d')"/>
+        <field name="last_invoice_date" eval="(DateTime.today() - relativedelta(months=2)).strftime('%Y-%m-%d')"/>
+    </record>
+
+    <!-- A past tenancy, now expired -->
+    <record id="demo_tenancy_sun_201_expired" model="property.tenancy">
+        <field name="tenant_id" ref="demo_tenant_priya"/>
+        <field name="room_id" ref="demo_room_sun_201"/>
+        <field name="date_start" eval="(DateTime.today() - relativedelta(years=2)).strftime('%Y-%m-%d')"/>
+        <field name="date_end" eval="(DateTime.today() - relativedelta(months=2)).strftime('%Y-%m-%d')"/>
+        <field name="rent_amount">30000</field>
+        <field name="invoice_frequency">monthly</field>
+        <field name="state">expired</field>
+        <field name="last_invoice_date" eval="(DateTime.today() - relativedelta(months=3)).strftime('%Y-%m-%d')"/>
+    </record>
+
+    <!-- A draft tenancy awaiting confirmation -->
+    <record id="demo_tenancy_sbp_f1_draft" model="property.tenancy">
+        <field name="tenant_id" ref="demo_tenant_ravi"/>
+        <field name="room_id" ref="demo_room_sbp_f1"/>
+        <field name="date_start" eval="(DateTime.today() + relativedelta(days=7)).strftime('%Y-%m-%d')"/>
+        <field name="date_end" eval="(DateTime.today() + relativedelta(months=12, days=7)).strftime('%Y-%m-%d')"/>
+        <field name="rent_amount">55000</field>
+        <field name="invoice_frequency">monthly</field>
+        <field name="state">draft</field>
+    </record>
+
+    <!-- Building documents -->
+    <record id="demo_document_sun_tax" model="property.document">
+        <field name="building_id" ref="demo_building_sunrise"/>
+        <field name="name">Property Tax Receipt 2026</field>
+        <field name="document_type">tax</field>
+        <field name="issue_date" eval="(DateTime.today() - relativedelta(months=11)).strftime('%Y-%m-%d')"/>
+        <field name="expiry_date" eval="(DateTime.today() + relativedelta(months=8)).strftime('%Y-%m-%d')"/>
+        <field name="responsible_id" ref="base.user_admin"/>
+    </record>
+    <record id="demo_document_sun_insurance" model="property.document">
+        <field name="building_id" ref="demo_building_sunrise"/>
+        <field name="name">Fire Insurance Policy</field>
+        <field name="document_type">insurance</field>
+        <field name="issue_date" eval="(DateTime.today() - relativedelta(years=1, days=-20)).strftime('%Y-%m-%d')"/>
+        <field name="expiry_date" eval="(DateTime.today() + relativedelta(days=20)).strftime('%Y-%m-%d')"/>
+        <field name="responsible_id" ref="base.user_admin"/>
+    </record>
+    <record id="demo_document_sbp_license" model="property.document">
+        <field name="building_id" ref="demo_building_silverpark"/>
+        <field name="name">Commercial Operating License</field>
+        <field name="document_type">license</field>
+        <field name="issue_date" eval="(DateTime.today() - relativedelta(years=2)).strftime('%Y-%m-%d')"/>
+        <field name="expiry_date" eval="(DateTime.today() - relativedelta(days=15)).strftime('%Y-%m-%d')"/>
+        <field name="responsible_id" ref="base.user_admin"/>
+    </record>
+    <record id="demo_document_plr_contract" model="property.document">
+        <field name="building_id" ref="demo_building_palm"/>
+        <field name="name">Facility Maintenance Contract</field>
+        <field name="document_type">contract</field>
+        <field name="issue_date" eval="(DateTime.today() - relativedelta(months=2)).strftime('%Y-%m-%d')"/>
+        <field name="expiry_date" eval="(DateTime.today() + relativedelta(months=10)).strftime('%Y-%m-%d')"/>
+        <field name="responsible_id" ref="base.user_admin"/>
+    </record>
+
+    <!-- Generate the first batch of rent invoices for the active tenancies above -->
+    <function model="property.tenancy" name="_cron_generate_rent_invoices" eval="[]"/>
+
+</odoo>

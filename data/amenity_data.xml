@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="amenity_wifi" model="property.amenity">
+        <field name="name">WiFi</field>
+        <field name="category">utility</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="amenity_ac" model="property.amenity">
+        <field name="name">Air Conditioning</field>
+        <field name="category">utility</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="amenity_power_backup" model="property.amenity">
+        <field name="name">Power Backup</field>
+        <field name="category">utility</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="amenity_geyser" model="property.amenity">
+        <field name="name">Geyser / Water Heater</field>
+        <field name="category">utility</field>
+        <field name="sequence">40</field>
+    </record>
+    <record id="amenity_wardrobe" model="property.amenity">
+        <field name="name">Wardrobe</field>
+        <field name="category">furnishing</field>
+        <field name="sequence">50</field>
+    </record>
+    <record id="amenity_tv" model="property.amenity">
+        <field name="name">TV</field>
+        <field name="category">furnishing</field>
+        <field name="sequence">60</field>
+    </record>
+    <record id="amenity_balcony" model="property.amenity">
+        <field name="name">Balcony</field>
+        <field name="category">furnishing</field>
+        <field name="sequence">70</field>
+    </record>
+    <record id="amenity_cctv" model="property.amenity">
+        <field name="name">CCTV Surveillance</field>
+        <field name="category">safety</field>
+        <field name="sequence">80</field>
+    </record>
+    <record id="amenity_security_guard" model="property.amenity">
+        <field name="name">Security Guard</field>
+        <field name="category">safety</field>
+        <field name="sequence">90</field>
+    </record>
+    <record id="amenity_fire_safety" model="property.amenity">
+        <field name="name">Fire Safety System</field>
+        <field name="category">safety</field>
+        <field name="sequence">100</field>
+    </record>
+    <record id="amenity_parking" model="property.amenity">
+        <field name="name">Parking</field>
+        <field name="category">recreation</field>
+        <field name="sequence">110</field>
+    </record>
+    <record id="amenity_lift" model="property.amenity">
+        <field name="name">Lift / Elevator</field>
+        <field name="category">recreation</field>
+        <field name="sequence">120</field>
+    </record>
+    <record id="amenity_clubhouse" model="property.amenity">
+        <field name="name">Clubhouse</field>
+        <field name="category">recreation</field>
+        <field name="sequence">130</field>
+    </record>
+    <record id="amenity_gym" model="property.amenity">
+        <field name="name">Gym</field>
+        <field name="category">recreation</field>
+        <field name="sequence">140</field>
+    </record>
+    <record id="amenity_swimming_pool" model="property.amenity">
+        <field name="name">Swimming Pool</field>
+        <field name="category">recreation</field>
+        <field name="sequence">150</field>
+    </record>
+</odoo>
